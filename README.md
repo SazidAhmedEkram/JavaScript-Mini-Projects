@@ -21,7 +21,7 @@ The main goal of this repository is to improve JavaScript skills by building sma
 ## Getting Started
 1. Clone the repository
 2. Open any project folder
-3. Run the `index.html` file in your browser
+3. Run the each .html file in your browser
 
 ## Future Plans
 - Add more advanced projects
