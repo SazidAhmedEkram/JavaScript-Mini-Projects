@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Counter Mini Project</title>
+</head>
+<body>
+  <h1>JavaScript Counter Mini Project</h1>
+  <p id="count" style="font-size:40px">0</p>
+  <button id="plus" onclick="return increase()">+</button>
+  <button id="minus" onclick="return decrease()">-</button>
+  <button id="reset" onclick="return reset()">Reset</button>
+  <button id="save" onclick="return saveNumber()">Save</button>
+  <button id="load" onclick="return loadNumber()">Load</button>
+
+  <script>
+    let Number = 0;
+    let counter = document.getElementById("count");
+    
+    function increase(){
+      Number++;
+      counter.innerHTML = Number;
+    }
+    function decrease(){
+      Number--;
+      counter.innerHTML = Number;
+    }
+    function reset(){
+      Number = 0;
+      counter.innerHTML = Number;
+    }
+    function saveNumber(){
+      localStorage.setItem("save-number", counter.innerHTML);
+    }
+    function loadNumber(){
+      counter.innerHTML = localStorage.getItem("save-number");
+      Number = localStorage.getItem("save-number");
+    }
+  </script>
+</body>
+</html>
