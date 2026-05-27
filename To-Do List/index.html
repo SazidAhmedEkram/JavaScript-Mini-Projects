@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-DO List</title>
+</head>
+<body>
+  <h1>To-Do List</h1>
+  <input type="text" placeholder="New Task" id="new-task">
+  <button id="add-btn">Add</button>
+  <br> <br>
+  <div id="list"></div>
+  <button id="clear-btn">Clear All</button>
+
+  <script>
+    let add = document.getElementById("add-btn");
+    let task = document.getElementById("new-task");
+    let clear = document.getElementById("clear-btn");
+    let list = document.getElementById("list");
+    updateUi();
+
+    
+    add.addEventListener("click", addTask);
+    clear.addEventListener("click", clearAllTasks);
+
+    task.addEventListener("keypress", function(e) {
+      if(e.key === "Enter"){
+        addTask();
+      }
+    });
+    
+    function addTask(){
+      let newTask = task.value.trim();
+      if(newTask != ''){
+          let getTask = JSON.parse(localStorage.getItem("listItem")) || [];
+          getTask.push(newTask);
+          localStorage.setItem("listItem", JSON.stringify(getTask));
+          updateUi();
+      }  
+    }
+    function updateUi(){
+      let localStorageTask = localStorage.getItem("listItem");
+      if(localStorageTask != null){
+        let myTask = JSON.parse(localStorageTask);
+        console.log("My array: "+myTask);
+        let ui = "<ul>";
+        for(let i = 0; i < myTask.length; i++){
+            ui += `
+            <li id="list${i + 1}"> 
+              ${myTask[i]} 
+              <button id="btn${i + 1}">x</button>
+            </li>`;
+        }
+        ui += "</ul>";
+        list.innerHTML = ui;
+        for(let i = 0; i < myTask.length; i++){
+          document.getElementById(`btn${i + 1}`).addEventListener("click", () => listDelete(i));
+        }
+        task.value = "";
+      }else{
+        list.innerHTML = "";
+      }
+    }
+    function clearAllTasks(){
+      localStorage.removeItem("listItem");
+      updateUi();
+    }
+    function listDelete(i){
+      let myTask = JSON.parse(localStorage.getItem("listItem"));
+      myTask.splice(i, 1);
+      if(myTask.length === 0){
+        localStorage.removeItem("listItem");
+      }else{
+        localStorage.setItem("listItem", JSON.stringify(myTask));
+      }
+      updateUi();
+    }
+  </script>
+</body>
+</html>
